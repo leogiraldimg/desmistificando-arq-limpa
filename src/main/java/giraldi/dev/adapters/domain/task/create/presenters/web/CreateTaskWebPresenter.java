@@ -2,7 +2,7 @@ package giraldi.dev.adapters.domain.task.create.presenters.web;
 
 import java.time.LocalDateTime;
 
-import giraldi.dev.adapters.common.handlers.WebHandler;
+import giraldi.dev.adapters.common.handlers.web.WebHandler;
 import giraldi.dev.adapters.common.models.web.WebViewModel;
 import giraldi.dev.application.domain.task.create.boundaries.CreateTaskOutputBoundary;
 import giraldi.dev.application.domain.task.create.models.CreateTaskResponseModel;

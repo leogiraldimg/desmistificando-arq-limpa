@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import giraldi.dev.adapters.common.handlers.WebHandler;
+import giraldi.dev.adapters.common.handlers.web.WebHandler;
 import giraldi.dev.application.domain.task.create.models.CreateTaskResponseModel;
 import giraldi.dev.entities.domain.task.TaskStatus;
 

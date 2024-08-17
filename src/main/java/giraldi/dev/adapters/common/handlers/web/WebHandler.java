@@ -1,4 +1,4 @@
-package giraldi.dev.adapters.common.handlers;
+package giraldi.dev.adapters.common.handlers.web;
 
 import giraldi.dev.adapters.common.models.web.WebViewModel;
 
