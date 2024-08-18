@@ -48,7 +48,7 @@ public class CreateTaskInteractor implements CreateTaskInputBoundary {
         }
 
         CreateTaskDsResponseModel dsResponseModel = dsGateway.save(new CreateTaskDsRequestModel(requestModel.title,
-                requestModel.description, requestModel.dueDate, requestModel.status, LocalDateTime.now()));
+                requestModel.description, requestModel.dueDate, requestModel.status));
 
         CreateTaskResponseModel responseModel = new CreateTaskResponseModel(dsResponseModel.id, dsResponseModel.title,
                 dsResponseModel.description, dsResponseModel.dueDate.toString(), dsResponseModel.status);

@@ -11,14 +11,11 @@ public class CreateTaskDsRequestModel {
     public String description;
     public LocalDate dueDate;
     public TaskStatus status;
-    public LocalDateTime createdAt;
 
-    public CreateTaskDsRequestModel(String title, String description, LocalDate dueDate, TaskStatus status,
-            LocalDateTime createdAt) {
+    public CreateTaskDsRequestModel(String title, String description, LocalDate dueDate, TaskStatus status) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.status = status;
-        this.createdAt = createdAt;
     }
 }
