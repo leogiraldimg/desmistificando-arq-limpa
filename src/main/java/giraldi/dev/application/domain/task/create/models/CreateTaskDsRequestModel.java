@@ -1,7 +1,6 @@
 package giraldi.dev.application.domain.task.create.models;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import giraldi.dev.entities.domain.task.TaskStatus;
 
