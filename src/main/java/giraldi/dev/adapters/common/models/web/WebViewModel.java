@@ -1,7 +1,6 @@
 package giraldi.dev.adapters.common.models.web;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 public class WebViewModel<T> {
     public int statusCode;

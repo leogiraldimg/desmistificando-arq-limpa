@@ -1,7 +1,6 @@
 package giraldi.dev.adapters.domain.task.create.controllers.web;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
