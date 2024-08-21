@@ -6,7 +6,9 @@ import giraldi.dev.application.domain.task.create.models.CreateTaskDsResponseMod
 import giraldi.dev.infra.datasource.jpa.domain.task.TaskDataMapper;
 import giraldi.dev.infra.datasource.jpa.domain.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CreateTaskDsJPA implements CreateTaskDsGateway {
 
     @Autowired
