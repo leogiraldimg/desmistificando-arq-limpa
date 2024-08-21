@@ -4,8 +4,8 @@ import java.util.Optional;
 
 public class WebRequestModel<Params, Headers, Body, Query> {
 
-    public Optional<Params> params;
-    public Optional<Headers> headers;
-    public Optional<Body> body;
-    public Optional<Query> query;
+    public Params params;
+    public Headers headers;
+    public Body body;
+    public Query query;
 }

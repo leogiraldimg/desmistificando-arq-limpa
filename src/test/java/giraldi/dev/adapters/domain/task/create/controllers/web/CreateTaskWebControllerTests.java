@@ -28,7 +28,7 @@ public class CreateTaskWebControllerTests {
         WebRequestModel<Void, Void, CreateTaskWebBodyModel, Void> requestModel = new WebRequestModel<>();
         CreateTaskWebBodyModel bodyModel = new CreateTaskWebBodyModel("Task 1", "Task 1 description", LocalDate.now(),
                 TaskStatus.TODO);
-        requestModel.body = Optional.of(bodyModel);
+        requestModel.body = bodyModel;
 
         controller.execute(requestModel);
     }

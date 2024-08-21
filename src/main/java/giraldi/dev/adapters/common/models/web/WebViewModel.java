@@ -1,5 +1,6 @@
 package giraldi.dev.adapters.common.models.web;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class WebViewModel<T> {
@@ -7,9 +8,9 @@ public class WebViewModel<T> {
     public Boolean error;
     public String message;
     public T content;
-    public LocalDateTime timestamp;
+    public Instant timestamp;
 
-    public WebViewModel(int statusCode, Boolean error, String message, T content, LocalDateTime timestamp) {
+    public WebViewModel(int statusCode, Boolean error, String message, T content, Instant timestamp) {
         this.statusCode = statusCode;
         this.error = error;
         this.message = message;

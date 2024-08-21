@@ -17,4 +17,7 @@ public class CreateTaskWebBodyModel {
         this.dueDate = dueDate;
         this.status = status;
     }
+
+    public CreateTaskWebBodyModel() {
+    }
 }

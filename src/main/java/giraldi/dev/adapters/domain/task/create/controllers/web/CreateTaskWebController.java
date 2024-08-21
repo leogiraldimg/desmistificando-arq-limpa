@@ -14,7 +14,7 @@ public class CreateTaskWebController {
     }
 
     public void execute(WebRequestModel<Void, Void, CreateTaskWebBodyModel, Void> requestModel) {
-        CreateTaskWebBodyModel bodyModel = requestModel.body.get();
+        CreateTaskWebBodyModel bodyModel = requestModel.body;
         inputBoundary
                 .execute(new CreateTaskRequestModel(bodyModel.title, bodyModel.description, bodyModel.dueDate,
                         bodyModel.status));

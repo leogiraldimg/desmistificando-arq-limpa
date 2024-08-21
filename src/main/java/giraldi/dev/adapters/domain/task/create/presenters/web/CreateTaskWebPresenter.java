@@ -1,6 +1,6 @@
 package giraldi.dev.adapters.domain.task.create.presenters.web;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import giraldi.dev.adapters.common.handlers.web.WebHandler;
 import giraldi.dev.adapters.common.models.web.WebViewModel;
@@ -19,7 +19,7 @@ public class CreateTaskWebPresenter implements CreateTaskOutputBoundary {
     public void presentSuccess(CreateTaskResponseModel responseModel) {
         WebViewModel<CreateTaskResponseModel> viewModel = new WebViewModel<CreateTaskResponseModel>(200, false,
                 "Tarefa cadastrada com sucesso", responseModel,
-                LocalDateTime.now());
+                Instant.now());
 
         handler.send(viewModel);
     }
@@ -27,7 +27,7 @@ public class CreateTaskWebPresenter implements CreateTaskOutputBoundary {
     @Override
     public void presentInvalidAttribute(String error) {
         WebViewModel<CreateTaskResponseModel> viewModel = new WebViewModel<CreateTaskResponseModel>(400, true, error,
-                null, LocalDateTime.now());
+                null, Instant.now());
 
         handler.send(viewModel);
     }
