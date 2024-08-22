@@ -17,7 +17,7 @@ public class CreateTaskWebPresenter implements CreateTaskOutputBoundary {
 
     @Override
     public void presentSuccess(CreateTaskResponseModel responseModel) {
-        WebViewModel<CreateTaskResponseModel> viewModel = new WebViewModel<CreateTaskResponseModel>(200, false,
+        WebViewModel<CreateTaskResponseModel> viewModel = new WebViewModel<CreateTaskResponseModel>(201, false,
                 "Tarefa cadastrada com sucesso", responseModel,
                 Instant.now());
 
