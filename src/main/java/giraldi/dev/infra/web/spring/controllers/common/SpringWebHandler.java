@@ -1,14 +1,16 @@
 package giraldi.dev.infra.web.spring.controllers.common;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import org.springframework.http.MediaType;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import giraldi.dev.adapters.common.handlers.web.WebHandler;
 import giraldi.dev.adapters.common.models.web.WebViewModel;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.MediaType;
-
-import java.io.IOException;
-import java.io.PrintWriter;
 
 public class SpringWebHandler<T> implements WebHandler<T> {
 
@@ -23,6 +25,7 @@ public class SpringWebHandler<T> implements WebHandler<T> {
         httpResponse.setStatus(viewModel.statusCode);
 
         httpResponse.setContentType(MediaType.APPLICATION_JSON.toString());
+        httpResponse.setCharacterEncoding("UTF-8");
 
         StandardResponse<T> response = null;
 
