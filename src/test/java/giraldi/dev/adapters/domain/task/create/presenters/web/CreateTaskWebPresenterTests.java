@@ -35,7 +35,7 @@ public class CreateTaskWebPresenterTests {
 
         presenter.presentSuccess(responseModel);
 
-        verify(handler).send(argThat(viewModel -> viewModel.content.equals(responseModel) && viewModel.statusCode == 200
+        verify(handler).send(argThat(viewModel -> viewModel.content.equals(responseModel) && viewModel.statusCode == 201
                 && viewModel.error == false && viewModel.message.equals("Tarefa cadastrada com sucesso")
                 && viewModel.timestamp != null));
     }
