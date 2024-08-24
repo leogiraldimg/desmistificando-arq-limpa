@@ -19,6 +19,7 @@ import giraldi.dev.adapters.common.models.web.WebRequestModel;
 import giraldi.dev.adapters.domain.task.create.controllers.web.CreateTaskWebController;
 import giraldi.dev.adapters.domain.task.create.models.web.CreateTaskWebBodyModel;
 import giraldi.dev.entities.domain.task.TaskStatus;
+import giraldi.dev.infra.web.spring.controllers.domain.task.models.CreateTaskBodyModel;
 
 @WebMvcTest(TaskController.class)
 public class TaskControllerTests {
@@ -36,7 +37,9 @@ public class TaskControllerTests {
     private String description;
     private LocalDate dueDate;
     private TaskStatus taskStatus;
+    private CreateTaskBodyModel createTaskBodyModel;
     private CreateTaskWebBodyModel createTaskWebBodyModel;
+    private WebRequestModel<Void, Void, CreateTaskWebBodyModel, Void> webRequestModel;
 
     @BeforeEach
     public void setUp() {
@@ -45,20 +48,21 @@ public class TaskControllerTests {
         dueDate = LocalDate.now().plusDays(1);
         taskStatus = TaskStatus.TODO;
 
+        webRequestModel = new WebRequestModel<Void, Void, CreateTaskWebBodyModel, Void>();
+        createTaskBodyModel = new CreateTaskBodyModel(title, description, dueDate, taskStatus);
         createTaskWebBodyModel = new CreateTaskWebBodyModel(title, description, dueDate, taskStatus);
     }
 
     @Test
     public void insertShouldCallCreateTaskWebController() throws Exception {
-        WebRequestModel<Void, Void, CreateTaskWebBodyModel, Void> expected = new WebRequestModel<Void, Void, CreateTaskWebBodyModel, Void>();
-        expected.body = createTaskWebBodyModel;
-        String jsonBody = objectMapper.writeValueAsString(createTaskWebBodyModel);
+        webRequestModel.body = createTaskWebBodyModel;
+        String jsonBody = objectMapper.writeValueAsString(createTaskBodyModel);
 
         mockMvc.perform(post("/tasks")
                 .content(jsonBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
 
-        verify(createTaskWebController).execute(expected);
+        verify(createTaskWebController).execute(webRequestModel);
     }
 }
