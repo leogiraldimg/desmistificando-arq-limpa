@@ -20,6 +20,9 @@ jobs:
         java-version: '22'
         distribution: 'oracle'
         cache: maven
+
+    - name: Execute tests
+      run: mvn clean verify
     
     - name: Build with Maven
       run: mvn -B package --file pom.xml
