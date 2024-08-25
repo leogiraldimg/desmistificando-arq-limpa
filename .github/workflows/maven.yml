@@ -22,4 +22,4 @@ jobs:
         cache: maven
 
     - name: Execute tests
-      run: mvn clean verify
+      run: mvn verify
