@@ -1,11 +1,8 @@
 package giraldi.dev.infra.web.spring.controllers.domain.task;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.time.LocalDate;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import giraldi.dev.adapters.domain.task.create.models.web.CreateTaskWebBodyModel;
+import giraldi.dev.entities.domain.task.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +13,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDate;
 
-import giraldi.dev.adapters.domain.task.create.models.web.CreateTaskWebBodyModel;
-import giraldi.dev.entities.domain.task.TaskStatus;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -34,8 +32,8 @@ public class TaskControllerTestsIT {
 
     private String title;
     private String description;
-    private LocalDate dueDate;
-    private TaskStatus taskStatus;
+    private String dueDate;
+    private String taskStatus;
     private CreateTaskWebBodyModel createTaskWebBodyModel;
     private Long countTotalTasks;
 
@@ -43,8 +41,8 @@ public class TaskControllerTestsIT {
     public void setUp() {
         title = "Task 1";
         description = "Description 1";
-        dueDate = LocalDate.now().plusDays(1);
-        taskStatus = TaskStatus.TODO;
+        dueDate = LocalDate.now().plusDays(1).toString();
+        taskStatus = TaskStatus.TODO.toString();
         countTotalTasks = 5L;
 
         createTaskWebBodyModel = new CreateTaskWebBodyModel(title, description, dueDate, taskStatus);
@@ -63,8 +61,8 @@ public class TaskControllerTestsIT {
         result.andExpect(jsonPath("$.content.id").value(countTotalTasks + 1));
         result.andExpect(jsonPath("$.content.title").value(title));
         result.andExpect(jsonPath("$.content.description").value(description));
-        result.andExpect(jsonPath("$.content.dueDate").value(dueDate.toString()));
-        result.andExpect(jsonPath("$.content.status").value(taskStatus.toString()));
+        result.andExpect(jsonPath("$.content.dueDate").value(dueDate));
+        result.andExpect(jsonPath("$.content.status").value(taskStatus));
     }
 
     @Test
@@ -140,11 +138,24 @@ public class TaskControllerTestsIT {
         result.andExpect(jsonPath("$.message").value("Data de vencimento é obrigatório"));
     }
 
-    // TODO: implementar teste de data no formato inválido
+    @Test
+    public void insertShouldReturnBadRequestWhenDueDateHasInvalidFormat() throws Exception {
+        createTaskWebBodyModel.dueDate = "invalid";
+        String jsonBody = objectMapper.writeValueAsString(createTaskWebBodyModel);
+
+        ResultActions result = mockMvc.perform(post("/tasks")
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isBadRequest());
+        result.andExpect(jsonPath("$.message").value(
+                "Data de vencimento deve estar no formato \"YYYY-mm-dd\""));
+    }
 
     @Test
     public void insertShouldReturnBadRequestWhenDueDateIsInThePast() throws Exception {
-        createTaskWebBodyModel.dueDate = LocalDate.now().minusDays(1);
+        createTaskWebBodyModel.dueDate = LocalDate.now().minusDays(1).toString();
         String jsonBody = objectMapper.writeValueAsString(createTaskWebBodyModel);
 
         ResultActions result = mockMvc.perform(post("/tasks")
@@ -171,5 +182,17 @@ public class TaskControllerTestsIT {
         result.andExpect(jsonPath("$.message").value("Status de tarefa é obrigatório"));
     }
 
-    // TODO: implementar teste de valor inválido para status
+    @Test
+    public void insertShouldReturnBadRequestWhenStatusIsInvalid() throws Exception {
+        createTaskWebBodyModel.status = "invalid";
+        String jsonBody = objectMapper.writeValueAsString(createTaskWebBodyModel);
+
+        ResultActions result = mockMvc.perform(post("/tasks")
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isBadRequest());
+        result.andExpect(jsonPath("$.message").value("Status de tarefa deve ser \"TODO\", \"IN_PROGRESS\" ou \"DONE\""));
+    }
 }

@@ -1,10 +1,11 @@
 package giraldi.dev.infra.web.spring.controllers.domain.task;
 
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
-import java.time.LocalDate;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import giraldi.dev.adapters.common.models.web.WebRequestModel;
+import giraldi.dev.adapters.domain.task.create.controllers.web.CreateTaskWebController;
+import giraldi.dev.adapters.domain.task.create.models.web.CreateTaskWebBodyModel;
+import giraldi.dev.entities.domain.task.TaskStatus;
+import giraldi.dev.infra.web.spring.controllers.domain.task.models.CreateTaskBodyModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDate;
 
-import giraldi.dev.adapters.common.models.web.WebRequestModel;
-import giraldi.dev.adapters.domain.task.create.controllers.web.CreateTaskWebController;
-import giraldi.dev.adapters.domain.task.create.models.web.CreateTaskWebBodyModel;
-import giraldi.dev.entities.domain.task.TaskStatus;
-import giraldi.dev.infra.web.spring.controllers.domain.task.models.CreateTaskBodyModel;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @WebMvcTest(TaskController.class)
 public class TaskControllerTests {
@@ -35,8 +33,8 @@ public class TaskControllerTests {
 
     private String title;
     private String description;
-    private LocalDate dueDate;
-    private TaskStatus taskStatus;
+    private String dueDate;
+    private String taskStatus;
     private CreateTaskBodyModel createTaskBodyModel;
     private CreateTaskWebBodyModel createTaskWebBodyModel;
     private WebRequestModel<Void, Void, CreateTaskWebBodyModel, Void> webRequestModel;
@@ -45,8 +43,8 @@ public class TaskControllerTests {
     public void setUp() {
         title = "Task 1";
         description = "Description 1";
-        dueDate = LocalDate.now().plusDays(1);
-        taskStatus = TaskStatus.TODO;
+        dueDate = LocalDate.now().plusDays(1).toString();
+        taskStatus = TaskStatus.TODO.toString();
 
         webRequestModel = new WebRequestModel<Void, Void, CreateTaskWebBodyModel, Void>();
         createTaskBodyModel = new CreateTaskBodyModel(title, description, dueDate, taskStatus);

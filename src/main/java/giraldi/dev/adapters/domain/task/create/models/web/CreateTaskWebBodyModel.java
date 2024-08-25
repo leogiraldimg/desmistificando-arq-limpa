@@ -1,18 +1,15 @@
 package giraldi.dev.adapters.domain.task.create.models.web;
 
-import java.time.LocalDate;
 import java.util.Objects;
-
-import giraldi.dev.entities.domain.task.TaskStatus;
 
 public class CreateTaskWebBodyModel {
 
     public String title;
     public String description;
-    public LocalDate dueDate;
-    public TaskStatus status;
+    public String dueDate;
+    public String status;
 
-    public CreateTaskWebBodyModel(String title, String description, LocalDate dueDate, TaskStatus status) {
+    public CreateTaskWebBodyModel(String title, String description, String dueDate, String status) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -32,7 +29,7 @@ public class CreateTaskWebBodyModel {
         return Objects.equals(title, that.title) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(dueDate, that.dueDate) &&
-                status == that.status;
+                Objects.equals(status, that.status);
     }
 
     @Override

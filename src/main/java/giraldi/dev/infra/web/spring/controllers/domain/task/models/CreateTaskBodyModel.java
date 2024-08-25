@@ -1,8 +1,5 @@
 package giraldi.dev.infra.web.spring.controllers.domain.task.models;
 
-import java.time.LocalDate;
-
-import giraldi.dev.entities.domain.task.TaskStatus;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -19,8 +16,10 @@ public class CreateTaskBodyModel {
     public String description;
 
     @NotNull(message = "Data de vencimento é obrigatório")
-    public LocalDate dueDate;
+    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}$", message = "Data de vencimento deve estar no formato \"YYYY-mm-dd\"")
+    public String dueDate;
 
     @NotNull(message = "Status de tarefa é obrigatório")
-    public TaskStatus status;
+    @Pattern(regexp = "TODO|IN_PROGRESS|DONE", message = "Status de tarefa deve ser \"TODO\", \"IN_PROGRESS\" ou \"DONE\"")
+    public String status;
 }
